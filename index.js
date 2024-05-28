@@ -9,13 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
     coverImage.innerHTML = ""
     queryValue = document.getElementById("search").value.trim();
 
-    fetch(`https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,editions,cover_i,ratings_average&limit=20`, {
+    fetch(`https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,editions,cover_i,ratings_average,subject&limit=20`, {
     })
-    // fetch(`https://openlibrary.org/search.json?author=${queryValue}&limit=20`)
     .then(response => response.json())
     .then(data => {
       createBookTitles(data)
-      // console.log(data)
     })
   })
 
@@ -28,14 +26,20 @@ document.addEventListener("DOMContentLoaded", () => {
       bookCover.addEventListener("click", (e) => {
         e.preventDefault()
         bookDetails.innerHTML = ""
+        const smCover = document.createElement("img")
         const title = document.createElement("h3")
         const avgRating = document.createElement("p")
+        const genre = document.createElement("p")
 
+        smCover.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
         title.textContent = `Title: ${doc.title}`
         avgRating.textContent = `Average Rating: ${doc.ratings_average}`
+        genre.textContent = `Genre: ${(doc.subject.slice(0,3))}`
 
+        bookDetails.appendChild(smCover)
         bookDetails.appendChild(title)
         bookDetails.appendChild(avgRating)
+        bookDetails.appendChild(genre)
       })
     })
   }
