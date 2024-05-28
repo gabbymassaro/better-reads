@@ -8,18 +8,19 @@ document.addEventListener("DOMContentLoaded", () => {
     titleList.innerHTML = ""
     queryValue = document.getElementById("search").value.trim();
 
-    fetch(`https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,editions&limit=20`, {
+    fetch(`https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,editions,isbn&limit=20`, {
     })
     .then(response => response.json())
     .then(data => {
       createBookTitles(data)
+      console.log(data)
     })
   })
 
   const createBookTitles = (book) => {
     book.docs.forEach((doc, index) => {
       const title = document.createElement("li")
-      title.textContent = `Book Title: ${doc.title} | Author: ${doc.author_name}`
+      title.textContent = `Book Title: ${doc.title} | Author: ${doc.author_name} | ISBN: ${doc.isbn[1]}`
       titleList.appendChild(title)
     })
   }
