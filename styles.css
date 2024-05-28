@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 50px;
   padding-top: 300px;
+  z-index: 2;
 }
 
 .book-grid {
@@ -21,4 +22,9 @@
   width: 100%;
   height: auto;
   display: block;
+}
+
+.book-details-container{
+  color: blue;
+  z-index: 1;
 }
