@@ -44,11 +44,13 @@ document.addEventListener("DOMContentLoaded", (e) => {
         detailsCover.addEventListener("mouseover", (e) => {
           const overlayText = document.createElement("div");
           overlayText.textContent = `First published in ${doc.first_publish_year}.`;
+          detailsCover.classList.add('overlay-hover')
           overlayText.classList.add("overlay-text");
           e.currentTarget.parentElement.appendChild(overlayText);
 
         })
         detailsCover.addEventListener("mouseout", (e) => {
+          detailsCover.classList.remove('overlay-hover');
           const overlayText = e.currentTarget.parentElement.querySelector(".overlay-text");
           if (overlayText) {
             overlayText.remove();
