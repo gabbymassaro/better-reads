@@ -13,11 +13,9 @@
 **Details**: Create a mouseover event for the books displayed in the details section after onClick. Mouseover should show the publishing year, mouseout should hide it. 
 
 ## STRETCH STORIES
-5. **User Story**: As a user, I want the ability to scroll through my book results without the results taking over the whole page. <br>
-   **Details**: Remove the 20 result page limit and wrap the results in rows of 5 books. The scroll should be within set width/height within the webpage.
-6. **User Story**: As a user, I want to store books that I'm interested in reading to a "Want to Read" list. <br>
-   **Details**: Create a side bar area to the left of the webpage. Fixed width that is the length of the webpage. Add title "Want to Read" that will house an unorderd list
-7. **User Story**: As a user, I want to add books to my "Want to Read" list. <br>
-   **Details**: Create a 'save' button on search result book covers. On 'save', just the book cover should be displayed in the "Want to Read" as a list item.
+5. **User Story**: As a user, I want to store books that I'm interested in reading to a database. <br>
+   **Details**: In the display book section, add a button that will store the selected book's information to a db.json server.
+7. **User Story**: As a user, I want to add and display books to "My Library". <br>
+   **Details**: Books stored to the db should be rendered on the right hand side of the page with a new "My Library" section.
 8. **User Story**: As a user, I want the ability to delete books from my "Want to Read" list. <br>
    **Details**: forEach Book Cover stored in the "Want to Read" list, add a 'delete' button on the cover. On click, 'delete' should remove that book from the list.
