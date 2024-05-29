@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", (e) => {
+
   let form = document.getElementById("book-form")
   let coverImage = document.querySelector(".book-grid")
   let bookDetails = document.querySelector('.book-details-container')
@@ -8,7 +9,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     coverImage.innerHTML = ""
     queryValue = document.getElementById("search").value.trim();
 
-    fetch(`https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,editions,cover_i,ratings_average,subject,first_publish_year&limit=20`, {
+    fetch(`https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,cover_i,ratings_average,subject,first_publish_year&limit=20`, {
     })
     .then(response => response.json())
     .then(data => {
@@ -17,7 +18,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   })
 
   const createBookTitles = (book) => {
-    book.docs.forEach((doc, index) => {
+    book.docs.forEach((doc) => {
       const bookCover = document.createElement("img")
       bookCover.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
       bookCover.classList.add('cover')
@@ -30,35 +31,37 @@ document.addEventListener("DOMContentLoaded", (e) => {
         const title = document.createElement("h3")
         const avgRating = document.createElement("p")
         const genre = document.createElement("p")
+        const addBtn = document.createElement("button")
 
         detailsCover.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
         title.textContent = `Title: ${doc.title}`
         avgRating.textContent = `Average Rating: ${Math.floor(doc.ratings_average)}/5 Stars`
-        genre.textContent = `Genre: ${(doc.subject.slice(0,3))} `
+        genre.textContent = `Genre: ${(doc.subject.slice(0,3))}`
+        addBtn.textContent = "add to library"
 
         bookDetails.appendChild(detailsCover)
         bookDetails.appendChild(title)
         bookDetails.appendChild(avgRating)
         bookDetails.appendChild(genre)
+        bookDetails.appendChild(addBtn)
 
-        detailsCover.addEventListener("mouseover", (e) => {
-          const overlayText = document.createElement("div");
-          overlayText.textContent = `First published in ${doc.first_publish_year}.`;
-          detailsCover.classList.add('overlay-hover')
-          overlayText.classList.add("overlay-text");
-          e.currentTarget.parentElement.appendChild(overlayText);
-
-        })
-        detailsCover.addEventListener("mouseout", (e) => {
-          detailsCover.classList.remove('overlay-hover');
-          const overlayText = e.currentTarget.parentElement.querySelector(".overlay-text");
-          if (overlayText) {
-            overlayText.remove();
-          }
+        addBtn.addEventListener("click", (e) =>{
+          fetch(`http://localhost:3000/books`, {
+            method: "POST",
+            body: JSON.stringify(doc),
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            }
+          })
+            .then(function(response) {
+              return response.json()
+            })
+            .then(data => {
+              console.log(data)
+            })
         })
       })
     })
   }
-
-
 })
