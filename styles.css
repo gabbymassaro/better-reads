@@ -29,3 +29,7 @@
   z-index: 1;
   padding-top: 20px;
 }
+
+.overlay-hover {
+  opacity: 0.5;
+}

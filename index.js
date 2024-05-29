@@ -1,5 +1,5 @@
-document.addEventListener("DOMContentLoaded", () => {
-
+document.addEventListener("DOMContentLoaded", (e) => {
+  e.preventDefault()
   let form = document.getElementById("book-form")
   let coverImage = document.querySelector(".book-grid")
   let bookDetails = document.querySelector('.book-details-container')
@@ -26,20 +26,36 @@ document.addEventListener("DOMContentLoaded", () => {
       bookCover.addEventListener("click", (e) => {
         e.preventDefault()
         bookDetails.innerHTML = ""
-        const smCover = document.createElement("img")
+        const detailsCover = document.createElement("img")
         const title = document.createElement("h3")
         const avgRating = document.createElement("p")
         const genre = document.createElement("p")
 
-        smCover.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
+        detailsCover.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
         title.textContent = `Title: ${doc.title}`
         avgRating.textContent = `Average Rating: ${doc.ratings_average}`
         genre.textContent = `Genre: ${(doc.subject.slice(0,3))}`
 
-        bookDetails.appendChild(smCover)
+        bookDetails.appendChild(detailsCover)
         bookDetails.appendChild(title)
         bookDetails.appendChild(avgRating)
         bookDetails.appendChild(genre)
+
+        detailsCover.addEventListener("mouseover", (e) => {
+          // const overlayText = document.createElement("div");
+          // overlayText.textContent = `${doc.author_name}`;
+          detailsCover.classList.add('overlay-hover')
+          // overlayText.classList.add("overlay-text");
+          // e.currentTarget.parentElement.appendChild(overlayText);
+
+        })
+        detailsCover.addEventListener("mouseout", (e) => {
+          detailsCover.classList.remove('overlay-hover');
+          // const overlayText = e.currentTarget.parentElement.querySelector(".overlay-text");
+          // if (overlayText) {
+          //   overlayText.remove();
+          // }
+        })
       })
     })
   }
