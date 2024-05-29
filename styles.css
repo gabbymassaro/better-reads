@@ -28,3 +28,14 @@
   color: black;
   position: relative;
 }
+
+.library {
+  width: 250px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  overflow-y: auto;
+}

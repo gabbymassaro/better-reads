@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   let form = document.getElementById("book-form")
   let coverImage = document.querySelector(".book-grid")
   let bookDetails = document.querySelector('.book-details-container')
+  let library = document.querySelector('.library')
 
   form.addEventListener("submit", (e) => {
     e.preventDefault()
@@ -64,4 +65,23 @@ document.addEventListener("DOMContentLoaded", (e) => {
       })
     })
   }
+
+  const renderLibrary = () => {
+    fetch(`http://localhost:3000/books`)
+      .then(response => response.json())
+      .then(data => {
+        createLibrary(data)
+      })
+  }
+
+  const createLibrary = (book) => {
+    book.forEach((book) => {
+      const libraryBook = document.createElement("img")
+      libraryBook.src = `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+      library.appendChild(libraryBook)
+    })
+  }
+
+  renderLibrary()
+
 })
