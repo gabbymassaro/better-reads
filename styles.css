@@ -2,30 +2,29 @@
   max-width: 1000px;
   margin: 0 auto;
   padding: 50px;
-  padding-top: 100px;
-  z-index: 2;
 }
 
 .book-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
 }
 
-.book-grid-item {
-  width: calc(20% - 20px);
-  margin-bottom: 20px;
-  box-sizing: border-box;
-}
-
-.book-grid-item img {
-  width: 100%;
-  height: auto;
-  display: block;
+.cover:hover {
+  opacity: 0.5;
+  cursor: pointer;
 }
 
 .book-details-container{
-  color: blue;
-  z-index: 1;
+  color: black;
   padding-top: 20px;
+  position: left;
+  max-width: 430px;
+  max-height: 480px;
+  cursor: pointer;
+}
+
+.overlay-text {
+  font-weight: bold;
+  color: black;
+  position: relative;
 }
