@@ -8,7 +8,7 @@
 ### Feature 3: Show Books Details onClick
 **User Story**: As a user, when I click on a book cover, I want to see the book details displayed on the page. Example: Author, Title, Publication Date, Page Count, Avg. Rating. <br>
 **Details**: Create an on-click event forEach book cover displayed. On-click should display book details above the search results (between search bar and results). Use innerHTML = "" to wipe the previous book data (if any) away so only one book's details are displayed at a time.
-### Feature 4: Show Published Year on Mosueover
+### Feature 4: Show Published Year on Mouseover
 **User Story**: As a user, if I mouseover over a book cover, I want to see the published date. <br>
 **Details**: Create a mouseover event for the books displayed in the details section after onClick. Mouseover should show the publishing year, mouseout should hide it. 
 
