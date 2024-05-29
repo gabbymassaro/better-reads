@@ -1,0 +1,31 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 50px;
+  padding-top: 100px;
+  z-index: 2;
+}
+
+.book-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.book-grid-item {
+  width: calc(20% - 20px);
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.book-grid-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.book-details-container{
+  color: blue;
+  z-index: 1;
+  padding-top: 20px;
+}
