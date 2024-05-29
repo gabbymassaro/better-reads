@@ -9,8 +9,8 @@
 **User Story**: As a user, when I click on a book cover, I want to see the book details displayed on the page. Example: Author, Title, Publication Date, Page Count, Avg. Rating. <br>
 **Details**: Create an on-click event forEach book cover displayed. On-click should display book details above the search results (between search bar and results). Use innerHTML = "" to wipe the previous book data (if any) away so only one book's details are displayed at a time.
 ### Feature 4: Show Book Title on Hover
-**User Story**: As a user, if I hover over a book cover, I want to see the title of the book displayed overtop the image. <br>
-**Details**: Create a hover event forEach book cover displayed. On hover, display the book's title within the image. Lower opacity but still display the image for readability.
+**User Story**: As a user, if I mouseover over a book cover, I want to see the published date. <br>
+**Details**: Create a mouseover event for the books displayed in the details section after onClick. Mouseover should show the publishing year, mouseout should hide it. 
 
 ## STRETCH STORIES
 5. **User Story**: As a user, I want the ability to scroll through my book results without the results taking over the whole page. <br>
