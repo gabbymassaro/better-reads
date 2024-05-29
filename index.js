@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", (e) => {
-
+  e.preventDefault()
   let form = document.getElementById("book-form")
   let coverImage = document.querySelector(".book-grid")
   let bookDetails = document.querySelector('.book-details-container')
@@ -79,6 +79,26 @@ document.addEventListener("DOMContentLoaded", (e) => {
       const libraryBook = document.createElement("img")
       libraryBook.src = `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
       library.appendChild(libraryBook)
+
+      const deleteButton = document.createElement('button')
+      deleteButton.textContent = 'x'
+      library.appendChild(deleteButton)
+
+      deleteButton.addEventListener("click", (e) => {
+        fetch(`http://localhost:3000/books/${book.id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+        })
+          .then(function (response) {
+            return response.json()
+          })
+          .then(data => {
+            deleteButton.parentNode.remove(data)
+          })
+      })
     })
   }
 
