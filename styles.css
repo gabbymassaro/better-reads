@@ -3,13 +3,12 @@
   margin: 0 auto;
   padding: 50px;
   padding-top: 100px;
-  z-index: 2;
 }
 
 .book-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  cursor: pointer;
 }
 
 .book-grid-item {
@@ -18,18 +17,21 @@
   box-sizing: border-box;
 }
 
-.book-grid-item img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
 .book-details-container{
-  color: blue;
-  z-index: 1;
+  color: black;
   padding-top: 20px;
+  position: left;
+  max-width: 430px;
+  max-height: 480px;
+  cursor: pointer;
 }
 
 .overlay-hover {
   opacity: 0.5;
+}
+
+.overlay-text {
+  font-weight: bold;
+  color: black;
+  position: relative;
 }
