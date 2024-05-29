@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
       coverImage.appendChild(bookCover)
 
       bookCover.addEventListener("click", (e) => {
-        e.preventDefault()
         bookDetails.innerHTML = ""
         const detailsCover = document.createElement("img")
         const title = document.createElement("h3")
@@ -55,25 +54,14 @@ document.addEventListener("DOMContentLoaded", (e) => {
               "Accept": "application/json"
             }
           })
-            .then(function(response) {
-              return response.json()
-            })
+            .then(response => response.json())
             .then(data => {
-              console.log(data)
+              createLibrary(data)
             })
         })
       })
     })
   }
-
-  const renderLibrary = () => {
-    fetch(`http://localhost:3000/books`)
-      .then(response => response.json())
-      .then(data => {
-        createLibrary(data)
-      })
-  }
-
   const createLibrary = (book) => {
     book.forEach((book) => {
       const libraryBook = document.createElement("img")
@@ -81,6 +69,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
       library.appendChild(libraryBook)
 
       const deleteButton = document.createElement('button')
+      deleteButton.classList.add("delete")
       deleteButton.textContent = 'x'
       library.appendChild(deleteButton)
 
@@ -102,6 +91,13 @@ document.addEventListener("DOMContentLoaded", (e) => {
     })
   }
 
-  renderLibrary()
+  const renderLibrary = () => {
+    fetch(`http://localhost:3000/books`)
+      .then(response => response.json())
+      .then(data => {
+        createLibrary(data)
+      })
+  }
 
+  renderLibrary()
 })
