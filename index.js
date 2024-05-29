@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     book.docs.forEach((doc, index) => {
       const bookCover = document.createElement("img")
       bookCover.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
+      bookCover.classList.add('cover')
       coverImage.appendChild(bookCover)
 
       bookCover.addEventListener("click", (e) => {
@@ -32,7 +33,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
         detailsCover.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
         title.textContent = `Title: ${doc.title}`
-        avgRating.textContent = `Average Rating: ${doc.ratings_average}`
+        avgRating.textContent = `Average Rating: ${Math.floor(doc.ratings_average)}/5 Stars`
         genre.textContent = `Genre: ${(doc.subject.slice(0,3))} `
 
         bookDetails.appendChild(detailsCover)
@@ -43,13 +44,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
         detailsCover.addEventListener("mouseover", (e) => {
           const overlayText = document.createElement("div");
           overlayText.textContent = `First published in ${doc.first_publish_year}.`;
-          detailsCover.classList.add('overlay-hover')
           overlayText.classList.add("overlay-text");
           e.currentTarget.parentElement.appendChild(overlayText);
 
         })
         detailsCover.addEventListener("mouseout", (e) => {
-          detailsCover.classList.remove('overlay-hover');
           const overlayText = e.currentTarget.parentElement.querySelector(".overlay-text");
           if (overlayText) {
             overlayText.remove();
