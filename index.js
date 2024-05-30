@@ -3,15 +3,27 @@ document.addEventListener("DOMContentLoaded", (e) => {
   let coverImage = document.querySelector(".book-grid")
   let bookDetails = document.querySelector('.book-details-container')
   let library = document.querySelector('.library')
-
   let header = document.getElementById('header')
   let pageHeader = document.getElementById('better-reads')
   let placeHolderImage = document.createElement('img')
 
   placeHolderImage.src = "./bookshelf.png"
   placeHolderImage.setAttribute('id', 'place-holder')
+
   header.appendChild(pageHeader)
   header.appendChild(placeHolderImage)
+
+  const changeImage = () => {
+    placeHolderImage.addEventListener("mouseover", (e) => {
+      placeHolderImage.src = "./welcome.png"
+      console.log("bye")
+    })
+    placeHolderImage.addEventListener("mouseout", (e) => {
+      placeHolderImage.src = "./bookshelf.png"
+      console.log("hi")
+    })
+  }
+  changeImage()
 
   form.addEventListener("submit", (e) => {
     e.preventDefault()
