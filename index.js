@@ -12,9 +12,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     fetch(`https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,cover_i,ratings_average,subject,first_publish_year&limit=20`, {
     })
     .then(response => response.json())
-    .then(data => {
-      createBookTitles(data)
-    })
+    .then(data => {createBookTitles(data)})
   })
 
   const createBookTitles = (book) => {
@@ -54,9 +52,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
             body: JSON.stringify(doc)
           })
             .then(response => response.json())
-            .then(data => {
-              addBookToLib(data)
-            })
+            .then(data => {addBookToLib(data)})
         })
       })
     })
@@ -64,49 +60,42 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
   const addBookToLib = (doc) => {
     const libraryImageContainer = document.createElement("div")
-      const libraryBook = document.createElement("img")
-      const deleteButton = document.createElement('button')
+    const libraryBook = document.createElement("img")
+    const deleteButton = document.createElement('button')
 
-      libraryImageContainer.setAttribute('id', 'library-image-container')
-      libraryBook.setAttribute('id', 'image')
-      deleteButton.setAttribute("id", "delete-button")
+    libraryImageContainer.setAttribute('id', 'library-image-container')
+    libraryBook.setAttribute('id', 'image')
+    deleteButton.setAttribute("id", "delete-button")
 
-      libraryImageContainer.appendChild(libraryBook)
-      libraryBook.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
-      deleteButton.textContent = 'x'
+    libraryImageContainer.appendChild(libraryBook)
+    libraryBook.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
+    deleteButton.textContent = 'x'
 
-      deleteButton.addEventListener("click", (e) => {
-        fetch(`http://localhost:3000/books/${doc.id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-        })
-          .then(function (response) {
-            return response.json()
-          })
-          .then(data => {
-            libraryImageContainer.parentNode.removeChild(libraryImageContainer)
-          })
+    deleteButton.addEventListener("click", (e) => {
+      fetch(`http://localhost:3000/books/${doc.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
       })
-      libraryImageContainer.appendChild(deleteButton)
-      library.appendChild(libraryImageContainer)
+        .then(response => response.json())
+        .then(libraryImageContainer.parentNode.removeChild(libraryImageContainer))
+    })
+    libraryImageContainer.appendChild(deleteButton)
+    library.appendChild(libraryImageContainer)
   }
 
   const createLibrary = (bookData) => {
     bookData.forEach((doc) => {
       addBookToLib(doc)
     })
-
   }
 
   const renderLibrary = () => {
     fetch(`http://localhost:3000/books`)
       .then(response => response.json())
-      .then(data => {
-        createLibrary(data)
-      })
+      .then(data => {createLibrary(data)})
   }
   renderLibrary()
 })
