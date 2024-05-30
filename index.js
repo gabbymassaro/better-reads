@@ -1,16 +1,18 @@
 document.addEventListener("DOMContentLoaded", (e) => {
-  let form = document.getElementById("book-form")
+  const form = document.getElementById("book-form")
+  const header = document.getElementById('header')
+  const pageHeader = document.getElementById('better-reads')
+  const collapsibleLibrary = document.querySelector(".my-library")
+  const searchInput = document.getElementById("search")
   let coverImage = document.querySelector(".book-grid")
   let bookDetails = document.querySelector('.book-details-container')
-  let header = document.getElementById('header')
-  let pageHeader = document.getElementById('better-reads')
   let placeHolderImage = document.createElement('img')
   let imageContainer = document.querySelector('.image-container')
-  let collapsibleLibrary = document.querySelector(".my-library")
   let libraryImageContainer
 
   placeHolderImage.src = "./bookshelf.png"
   placeHolderImage.setAttribute('id', 'place-holder')
+  searchInput.value = ""
 
   header.appendChild(pageHeader)
   header.appendChild(placeHolderImage)
@@ -28,9 +30,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
   form.addEventListener("submit", (e) => {
     e.preventDefault()
     coverImage.innerHTML = ""
+    bookDetails.innerHTML = ""
     queryValue = document.getElementById("search").value.trim();
 
-    fetch(`https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,cover_i,ratings_average,subject,first_publish_year&limit=20`, {
+    fetch(`https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,cover_i,ratings_average,subject,first_publish_year,id_amazon&limit=20`, {
     })
     .then(response => response.json())
     .then(data => {createBookCovers(data)})
@@ -106,6 +109,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
     deleteButton.addEventListener("click", (e) => {
       onDeleteButton(e, doc)
     })
+
+    libraryBook.addEventListener("click", (e) => {
+      onLibraryBook(e, doc)
+    })
   }
 
   function onDeleteButton(e, doc) {
@@ -123,6 +130,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
           libraryImageContainer.remove()
         }
       })
+  }
+
+  function onLibraryBook(e, doc) {
+    window.open(`https://www.amazon.com/dp/${doc.id_amazon[1]}`)
   }
 
   const createLibrary = (bookData) => {
