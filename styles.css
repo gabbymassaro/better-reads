@@ -10,7 +10,6 @@
 .container {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 50px;
 }
 
 .book-grid {
@@ -30,7 +29,7 @@
   position: left;
   max-width: 430px;
   max-height: 480px;
-  cursor: pointer;
+  float: left;
 }
 
 .overlay-text {
