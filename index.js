@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   let placeHolderImage = document.createElement('img')
   let imageContainer = document.querySelector('.image-container')
   let collapsibleLibrary = document.querySelector(".my-library")
+  let libraryImageContainer
 
   placeHolderImage.src = "./bookshelf.png"
   placeHolderImage.setAttribute('id', 'place-holder')
@@ -32,10 +33,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
     fetch(`https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,cover_i,ratings_average,subject,first_publish_year&limit=20`, {
     })
     .then(response => response.json())
-    .then(data => {createBookTitles(data)})
+    .then(data => {createBookCovers(data)})
   })
 
-  const createBookTitles = (book) => {
+  const createBookCovers = (book) => {
     book.docs.forEach((doc) => {
       const bookCover = document.createElement("img")
       bookCover.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
@@ -43,43 +44,51 @@ document.addEventListener("DOMContentLoaded", (e) => {
       coverImage.appendChild(bookCover)
 
       bookCover.addEventListener("click", (e) => {
-        bookDetails.innerHTML = ""
-        const detailsCover = document.createElement("img")
-        const title = document.createElement("h3")
-        const avgRating = document.createElement("p")
-        const genre = document.createElement("p")
-        const addBtn = document.createElement("button")
-
-        detailsCover.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
-        title.textContent = `Title: ${doc.title}`
-        avgRating.textContent = `Average Rating: ${Math.floor(doc.ratings_average)}/5 Stars`
-        genre.textContent = `Genre: ${(doc.subject.slice(0,3))}`
-        addBtn.textContent = "add to library"
-
-        bookDetails.appendChild(detailsCover)
-        bookDetails.appendChild(title)
-        bookDetails.appendChild(avgRating)
-        bookDetails.appendChild(genre)
-        bookDetails.appendChild(addBtn)
-
-        addBtn.addEventListener("click", (e) =>{
-          fetch(`http://localhost:3000/books`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json"
-            },
-            body: JSON.stringify(doc)
-          })
-            .then(response => response.json())
-            .then(data => {addBookToLib(data)})
-        })
+        onBookCover(e, doc)
       })
     })
   }
 
+  function onBookCover(e, doc) {
+    bookDetails.innerHTML = ""
+    const detailsCover = document.createElement("img")
+    const title = document.createElement("h3")
+    const avgRating = document.createElement("p")
+    const genre = document.createElement("p")
+    const addBtn = document.createElement("button")
+
+    detailsCover.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
+    title.textContent = `Title: ${doc.title}`
+    avgRating.textContent = `Average Rating: ${Math.floor(doc.ratings_average)}/5 Stars`
+    genre.textContent = `Genre: ${(doc.subject.slice(0,3))}`
+    addBtn.textContent = "add to library"
+
+    bookDetails.appendChild(detailsCover)
+    bookDetails.appendChild(title)
+    bookDetails.appendChild(avgRating)
+    bookDetails.appendChild(genre)
+    bookDetails.appendChild(addBtn)
+
+    addBtn.addEventListener("click", (e) => {
+      onAddBtnClick(e, doc)
+    })
+  }
+
+  function onAddBtnClick(e, doc) {
+    fetch(`http://localhost:3000/books`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(doc)
+    })
+      .then(response => response.json())
+      .then(data => {addBookToLib(data)})
+  }
+
   const addBookToLib = (doc) => {
-    const libraryImageContainer = document.createElement("div")
+    libraryImageContainer = document.createElement("div")
     const libraryBook = document.createElement("img")
     const deleteButton = document.createElement('button')
 
@@ -95,16 +104,25 @@ document.addEventListener("DOMContentLoaded", (e) => {
     imageContainer.appendChild(libraryImageContainer)
 
     deleteButton.addEventListener("click", (e) => {
-      fetch(`http://localhost:3000/books/${doc.id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-      })
-        .then(response => response.json())
-        .then(libraryImageContainer.parentNode.removeChild(libraryImageContainer))
+      onDeleteButton(e, doc)
     })
+  }
+
+  function onDeleteButton(e, doc) {
+    e.preventDefault()
+    fetch(`http://localhost:3000/books/${doc.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+    })
+      .then(response => {
+        if(response.ok) {
+          const libraryImageContainer = e.target.parentElement;
+          libraryImageContainer.remove()
+        }
+      })
   }
 
   const createLibrary = (bookData) => {
