@@ -80,6 +80,7 @@ body {
   position: relative;
   display: inline-block;
   overflow: hidden;
+  cursor: pointer;
 }
 
 #image-container {
