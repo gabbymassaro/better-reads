@@ -45,40 +45,6 @@
       "ratings_average": 4.109005
     },
     {
-      "id": "2b54",
-      "author_name": [
-        "Stephen King"
-      ],
-      "cover_i": 8570003,
-      "first_publish_year": 1981,
-      "key": "/works/OL81610W",
-      "title": "Cujo",
-      "subject": [
-        "suspense",
-        "psychological horror",
-        "Fiction",
-        "Rabies in fiction",
-        "Dogs in fiction",
-        "Dogs",
-        "Rabies",
-        "Horror",
-        "American Horror tales",
-        "horror fiction",
-        "American literature",
-        "Fiction, horror",
-        "Maine, fiction",
-        "Large type books",
-        "Saint Bernard dog",
-        "Spanish language materials",
-        "Perros",
-        "Novela",
-        "Rabia",
-        "Saint Bernard dogs",
-        "Fiction, media tie-in"
-      ],
-      "ratings_average": 3.8055556
-    },
-    {
       "id": "690d",
       "author_name": [
         "Stephen King"
@@ -156,6 +122,29 @@
         "Children's stories",
         "Children's fiction"
       ]
+    },
+    {
+      "id": "1f56",
+      "author_name": [
+        "Oscar Wilde"
+      ],
+      "cover_i": 2003146,
+      "first_publish_year": 1881,
+      "key": "/works/OL14877876W",
+      "title": "Poems",
+      "subject": [
+        "Pre-Raphaelitism",
+        "Literature",
+        "Art",
+        "Poetry",
+        "History and criticism",
+        "Classic Literature",
+        "Fiction",
+        "Poetry (poetic works by one author)",
+        "Pr5814 1997",
+        "821/.8"
+      ],
+      "ratings_average": 4
     }
   ]
 }

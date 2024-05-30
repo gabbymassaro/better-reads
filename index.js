@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   let header = document.getElementById('header')
   let pageHeader = document.getElementById('better-reads')
   let placeHolderImage = document.createElement('img')
+  let collapsibleLibrary = document.querySelector(".my-library")
 
   placeHolderImage.src = "./bookshelf.png"
   placeHolderImage.setAttribute('id', 'place-holder')
@@ -103,6 +104,14 @@ document.addEventListener("DOMContentLoaded", (e) => {
     })
     libraryImageContainer.appendChild(deleteButton)
     library.appendChild(libraryImageContainer)
+
+    collapsibleLibrary.addEventListener("click", (e) => {
+      if (libraryImageContainer.style.display === "inline-block") {
+        libraryImageContainer.style.display = "none";
+      } else {
+        libraryImageContainer.style.display = "inline-block";
+      }
+    })
   }
 
   const createLibrary = (bookData) => {
