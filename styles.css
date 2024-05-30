@@ -1,7 +1,20 @@
+#header {
+  align-items: center;
+  justify-content: center;
+  display: grid;
+}
+
 #better-reads{
   font-family: 'American Typewriter', serif;
   font-weight: 300;
   font-size: 100px;
+  align-items: center;
+  justify-content: center;
+  display: grid;
+  margin: 0px;
+}
+
+#place-holder{
   align-items: center;
   justify-content: center;
   display: flex;
