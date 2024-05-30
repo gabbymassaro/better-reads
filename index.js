@@ -16,11 +16,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
   const changeImage = () => {
     placeHolderImage.addEventListener("mouseover", (e) => {
       placeHolderImage.src = "./welcome.png"
-      console.log("bye")
     })
     placeHolderImage.addEventListener("mouseout", (e) => {
       placeHolderImage.src = "./bookshelf.png"
-      console.log("hi")
     })
   }
   changeImage()
