@@ -2,10 +2,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
   let form = document.getElementById("book-form")
   let coverImage = document.querySelector(".book-grid")
   let bookDetails = document.querySelector('.book-details-container')
-  let library = document.querySelector('.library')
   let header = document.getElementById('header')
   let pageHeader = document.getElementById('better-reads')
   let placeHolderImage = document.createElement('img')
+  let imageContainer = document.querySelector('.image-container')
   let collapsibleLibrary = document.querySelector(".my-library")
 
   placeHolderImage.src = "./bookshelf.png"
@@ -91,6 +91,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
     libraryBook.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
     deleteButton.textContent = 'x'
 
+    libraryImageContainer.appendChild(deleteButton)
+    imageContainer.appendChild(libraryImageContainer)
+
     deleteButton.addEventListener("click", (e) => {
       fetch(`http://localhost:3000/books/${doc.id}`, {
         method: "DELETE",
@@ -101,16 +104,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
       })
         .then(response => response.json())
         .then(libraryImageContainer.parentNode.removeChild(libraryImageContainer))
-    })
-    libraryImageContainer.appendChild(deleteButton)
-    library.appendChild(libraryImageContainer)
-
-    collapsibleLibrary.addEventListener("click", (e) => {
-      if (libraryImageContainer.style.display === "inline-block") {
-        libraryImageContainer.style.display = "none";
-      } else {
-        libraryImageContainer.style.display = "inline-block";
-      }
     })
   }
 
@@ -126,4 +119,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
       .then(data => {createLibrary(data)})
   }
   renderLibrary()
+
+  collapsibleLibrary.addEventListener("click", (e) => {
+    imageContainer.classList.toggle("hidden")
+  })
+
 })

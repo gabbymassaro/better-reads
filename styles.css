@@ -22,6 +22,7 @@ body {
   align-items: center;
   justify-content: center;
   display: flex;
+  cursor: pointer;
 }
 
 .container {
@@ -77,8 +78,18 @@ body {
 
 #library-image-container {
   position: relative;
-  display: none;
+  display: inline-block;
   overflow: hidden;
+}
+
+#image-container {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.hidden {
+  display: none;
 }
 
 #delete-button {
