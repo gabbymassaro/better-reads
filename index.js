@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", (e) => {
-  e.preventDefault()
   let form = document.getElementById("book-form")
   let coverImage = document.querySelector(".book-grid")
   let bookDetails = document.querySelector('.book-details-container')
@@ -26,7 +25,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
       coverImage.appendChild(bookCover)
 
       bookCover.addEventListener("click", (e) => {
-        e.preventDefault()
         bookDetails.innerHTML = ""
         const detailsCover = document.createElement("img")
         const title = document.createElement("h3")
@@ -49,43 +47,36 @@ document.addEventListener("DOMContentLoaded", (e) => {
         addBtn.addEventListener("click", (e) =>{
           fetch(`http://localhost:3000/books`, {
             method: "POST",
-            body: JSON.stringify(doc),
             headers: {
               "Content-Type": "application/json",
               "Accept": "application/json"
-            }
+            },
+            body: JSON.stringify(doc)
           })
-            .then(function(response) {
-              return response.json()
-            })
+            .then(response => response.json())
             .then(data => {
-              console.log(data)
+              addBookToLib(data)
             })
         })
       })
     })
   }
 
-  const renderLibrary = () => {
-    fetch(`http://localhost:3000/books`)
-      .then(response => response.json())
-      .then(data => {
-        createLibrary(data)
-      })
-  }
-
-  const createLibrary = (book) => {
-    book.forEach((book) => {
+  const addBookToLib = (doc) => {
+    const libraryImageContainer = document.createElement("div")
       const libraryBook = document.createElement("img")
-      libraryBook.src = `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-      library.appendChild(libraryBook)
-
       const deleteButton = document.createElement('button')
+
+      libraryImageContainer.setAttribute('id', 'library-image-container')
+      libraryBook.setAttribute('id', 'image')
+      deleteButton.setAttribute("id", "delete-button")
+
+      libraryImageContainer.appendChild(libraryBook)
+      libraryBook.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
       deleteButton.textContent = 'x'
-      library.appendChild(deleteButton)
 
       deleteButton.addEventListener("click", (e) => {
-        fetch(`http://localhost:3000/books/${book.id}`, {
+        fetch(`http://localhost:3000/books/${doc.id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -96,12 +87,26 @@ document.addEventListener("DOMContentLoaded", (e) => {
             return response.json()
           })
           .then(data => {
-            deleteButton.parentNode.remove(data)
+            libraryImageContainer.parentNode.removeChild(libraryImageContainer)
           })
       })
-    })
+      libraryImageContainer.appendChild(deleteButton)
+      library.appendChild(libraryImageContainer)
   }
 
-  renderLibrary()
+  const createLibrary = (bookData) => {
+    bookData.forEach((doc) => {
+      addBookToLib(doc)
+    })
 
+  }
+
+  const renderLibrary = () => {
+    fetch(`http://localhost:3000/books`)
+      .then(response => response.json())
+      .then(data => {
+        createLibrary(data)
+      })
+  }
+  renderLibrary()
 })
