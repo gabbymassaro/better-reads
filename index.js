@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", (e) => {
-  e.preventDefault()
   let form = document.getElementById("book-form")
   let coverImage = document.querySelector(".book-grid")
   let bookDetails = document.querySelector('.book-details-container')
@@ -56,25 +55,28 @@ document.addEventListener("DOMContentLoaded", (e) => {
           })
             .then(response => response.json())
             .then(data => {
-              createLibrary(data)
+              return data
             })
         })
       })
     })
   }
-  const createLibrary = (book) => {
-    book.forEach((book) => {
+  const createLibrary = (bookData) => {
+    bookData.forEach((doc) => {
+      const libraryImageContainer = document.createElement("div")
       const libraryBook = document.createElement("img")
-      libraryBook.src = `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-      library.appendChild(libraryBook)
-
       const deleteButton = document.createElement('button')
-      deleteButton.classList.add("delete")
-      deleteButton.textContent = 'x'
-      library.appendChild(deleteButton)
+
+      libraryImageContainer.setAttribute('id', 'library-image-container')
+      libraryBook.setAttribute('id', 'image')
+      deleteButton.setAttribute("id", "delete-button")
+
+      libraryImageContainer.appendChild(libraryBook)
+      libraryBook.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
+      deleteButton.textContent = 'delete'
 
       deleteButton.addEventListener("click", (e) => {
-        fetch(`http://localhost:3000/books/${book.id}`, {
+        fetch(`http://localhost:3000/books/${doc.id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -85,9 +87,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
             return response.json()
           })
           .then(data => {
-            deleteButton.parentNode.remove(data)
+            libraryImageContainer.parentNode.removeChild(libraryImageContainer)
           })
       })
+      libraryImageContainer.appendChild(deleteButton)
+      library.appendChild(libraryImageContainer)
     })
   }
 
@@ -98,6 +102,5 @@ document.addEventListener("DOMContentLoaded", (e) => {
         createLibrary(data)
       })
   }
-
   renderLibrary()
 })
