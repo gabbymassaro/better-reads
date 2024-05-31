@@ -83,7 +83,7 @@ body {
   cursor: pointer;
 }
 
-#image-container {
+#library-books-container {
   position: relative;
   display: inline-block;
   overflow: hidden;
