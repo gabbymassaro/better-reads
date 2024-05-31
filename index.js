@@ -28,10 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault()
     bookGrid.innerHTML = ""
     bookDetailsContainer.innerHTML = ""
-    queryValue = document.getElementById("search").value.trim();
+    queryValue = document.getElementById("search-input").value.trim();
 
-    fetch(`https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,cover_i,ratings_average,subject,first_publish_year,id_amazon`, {
-    })
+    fetch(`https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,cover_i,ratings_average,subject,first_publish_year,id_amazon`)
     .then(response => response.json())
     .then(data => createBookCovers(data.docs))
     .catch(err => alert(err.message))

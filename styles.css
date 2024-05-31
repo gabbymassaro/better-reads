@@ -73,7 +73,7 @@ body {
   cursor: pointer;
   border: none;
   outline: none;
-  background-color: yellow;
+  background-color: #fcdcc8;
 }
 
 #library-image-container {
@@ -81,6 +81,7 @@ body {
   display: inline-block;
   overflow: hidden;
   cursor: pointer;
+  padding: 15px;
 }
 
 #library-books-container {
@@ -95,6 +96,6 @@ body {
 
 #delete-button {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 20px;
+  right: 20px;
 }
