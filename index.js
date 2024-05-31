@@ -1,29 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("book-form")
-  const header = document.getElementById('header')
-  const pageHeader = document.getElementById('better-reads')
+  const header = document.getElementById("header")
+  const pageHeader = document.getElementById("better-reads")
   const collapsibleLibrary = document.querySelector(".my-library")
   const searchInput = document.getElementById("search")
   let bookGrid = document.querySelector(".book-grid")
-  let bookDetailsContainer = document.querySelector('.book-details-container')
-  let placeHolderImage = document.createElement('img')
-  let libraryBooksContainer = document.querySelector('.image-container')
+  let bookDetailsContainer = document.querySelector(".book-details-container")
+  let plantsAndBooks = document.createElement("img")
+  let libraryBooksContainer = document.querySelector(".image-container")
   let libraryImageContainer
 
-  placeHolderImage.src = "./bookshelf.png"
-  placeHolderImage.setAttribute('id', 'place-holder')
+  plantsAndBooks.src = "./bookshelf.png"
+  plantsAndBooks.setAttribute("id", "place-holder")
   searchInput.value = ""
 
   header.appendChild(pageHeader)
-  header.appendChild(placeHolderImage)
+  header.appendChild(plantsAndBooks)
 
-  placeHolderImage.addEventListener("mouseover", () => {
-    placeHolderImage.src = "./welcome.png"
+  plantsAndBooks.addEventListener("mouseover", () => {
+    plantsAndBooks.src = "./welcome.png"
   })
-  placeHolderImage.addEventListener("mouseout", () => {
-    placeHolderImage.src = "./bookshelf.png"
+  plantsAndBooks.addEventListener("mouseout", () => {
+    plantsAndBooks.src = "./bookshelf.png"
   })
-
 
   form.addEventListener("submit", (e) => {
     e.preventDefault()
@@ -34,14 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,cover_i,ratings_average,subject,first_publish_year,id_amazon`, {
     })
     .then(response => response.json())
-    .then(data => {createBookCovers(data.docs)})
+    .then(data => createBookCovers(data.docs))
+    .catch(err => alert(err.message))
   })
 
   const createBookCovers = (docs) => {
     docs.forEach((doc) => {
       const bookCover = document.createElement("img")
       bookCover.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
-      bookCover.classList.add('cover')
+      bookCover.classList.add("cover")
       bookGrid.appendChild(bookCover)
 
       bookCover.addEventListener("click", () => {
@@ -85,21 +85,22 @@ document.addEventListener("DOMContentLoaded", () => {
       body: JSON.stringify(doc)
     })
       .then(response => response.json())
-      .then(data => {addBookToLib(data)})
+      .then(data => addBookToLib(data))
+      .catch(err => alert(err.message))
   }
 
   const addBookToLib = (doc) => {
     libraryImageContainer = document.createElement("div")
     const libraryBook = document.createElement("img")
-    const deleteButton = document.createElement('button')
+    const deleteButton = document.createElement("button")
 
-    libraryImageContainer.setAttribute('id', 'library-image-container')
-    libraryBook.setAttribute('id', 'image')
+    libraryImageContainer.setAttribute("id", "library-image-container")
+    libraryBook.setAttribute("id", "image")
     deleteButton.setAttribute("id", "delete-button")
 
     libraryImageContainer.appendChild(libraryBook)
     libraryBook.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
-    deleteButton.textContent = 'x'
+    deleteButton.textContent = "x"
 
     libraryImageContainer.appendChild(deleteButton)
     libraryBooksContainer.appendChild(libraryImageContainer)
@@ -141,7 +142,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetch(`http://localhost:3000/books`)
     .then(response => response.json())
-    .then(data => {createLibrary(data)})
+    .then(data => createLibrary(data))
+    .catch(err => alert(err.message))
 
   collapsibleLibrary.addEventListener("click", () => {
     libraryBooksContainer.classList.toggle("hidden")
