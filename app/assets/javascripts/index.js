@@ -3,37 +3,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const header = document.getElementById("header")
   const pageHeader = document.getElementById("better-reads")
   const collapsibleLibrary = document.querySelector(".my-library")
-  const searchInput = document.getElementById("search")
   let bookGrid = document.querySelector(".book-grid")
   let bookDetailsContainer = document.querySelector(".book-details-container")
-  let plantsAndBooks = document.createElement("img")
+  const plantsAndBooks = document.getElementById("plants-and-books")
   let libraryBooksContainer = document.querySelector(".image-container")
   let libraryImageContainer
 
-  plantsAndBooks.src = "./bookshelf.png"
-  plantsAndBooks.setAttribute("id", "place-holder")
-  searchInput.value = ""
+  plantsAndBooks.src = plantsAndBooks.dataset.hoverDefaultValue
 
   header.appendChild(pageHeader)
-  header.appendChild(plantsAndBooks)
-
-  plantsAndBooks.addEventListener("mouseover", () => {
-    plantsAndBooks.src = "./welcome.png"
-  })
-  plantsAndBooks.addEventListener("mouseout", () => {
-    plantsAndBooks.src = "./bookshelf.png"
-  })
 
   form.addEventListener("submit", (e) => {
     e.preventDefault()
     bookGrid.innerHTML = ""
     bookDetailsContainer.innerHTML = ""
-    queryValue = document.getElementById("search-input").value.trim();
+    queryValue = document.getElementById("search-input").value.trim()
 
-    fetch(`https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,cover_i,ratings_average,subject,first_publish_year,id_amazon`)
-    .then(response => response.json())
-    .then(data => createBookCovers(data.docs))
-    .catch(err => alert(err.message))
+    fetch(
+      `https://openlibrary.org/search.json?author=${queryValue}&fields=key,title,author_name,cover_i,ratings_average,subject,first_publish_year,id_amazon`
+    )
+      .then((response) => response.json())
+      .then((data) => createBookCovers(data.docs))
+      .catch((err) => alert(err.message))
   })
 
   const createBookCovers = (docs) => {
@@ -59,8 +50,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     detailsCover.src = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
     title.textContent = `Title: ${doc.title}`
-    avgRating.textContent = `Average Rating: ${Math.floor(doc.ratings_average)}/5 Stars`
-    genre.textContent = `Genre: ${(doc.subject.slice(0,3))}`
+    avgRating.textContent = `Average Rating: ${Math.floor(
+      doc.ratings_average
+    )}/5 Stars`
+    genre.textContent = `Genre: ${doc.subject.slice(0, 3)}`
     addBtn.textContent = "add to library"
 
     bookDetailsContainer.appendChild(detailsCover)
@@ -79,13 +72,13 @@ document.addEventListener("DOMContentLoaded", () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json"
+        Accept: "application/json",
       },
-      body: JSON.stringify(doc)
+      body: JSON.stringify(doc),
     })
-      .then(response => response.json())
-      .then(data => addBookToLib(data))
-      .catch(err => alert(err.message))
+      .then((response) => response.json())
+      .then((data) => addBookToLib(data))
+      .catch((err) => alert(err.message))
   }
 
   const addBookToLib = (doc) => {
@@ -106,11 +99,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     deleteButton.addEventListener("click", (e) => {
       onDeleteButton(e, doc)
+      console.log("delete button was clicked")
     })
 
-    libraryBook.addEventListener("click", () => {
-      onLibraryBook(doc)
-    })
+    // libraryBook.addEventListener("click", () => {
+    //   onLibraryBook(doc)
+    //   console.log("library book was clicked")
+    // })
   }
 
   function onDeleteButton(e, doc) {
@@ -118,20 +113,20 @@ document.addEventListener("DOMContentLoaded", () => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json"
+        Accept: "application/json",
       },
+    }).then((response) => {
+      if (response.ok) {
+        const libraryImageContainer = e.target.parentElement
+        libraryImageContainer.remove()
+      }
     })
-      .then(response => {
-        if(response.ok) {
-          const libraryImageContainer = e.target.parentElement;
-          libraryImageContainer.remove()
-        }
-      })
   }
 
-  function onLibraryBook(doc) {
-    window.open(`https://www.amazon.com/dp/${doc.id_amazon[0]}`)
-  }
+  // function onLibraryBook(doc) {
+  //   window.open(`https://www.amazon.com/dp/${doc.amazon_id[0]}`)
+  //   console.log(doc.id.amazon_ids)
+  // }
 
   const createLibrary = (bookData) => {
     bookData.forEach((doc) => {
@@ -140,9 +135,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   fetch(`http://localhost:3000/books`)
-    .then(response => response.json())
-    .then(data => createLibrary(data))
-    .catch(err => alert(err.message))
+    .then((response) => response.json())
+    .then((data) => createLibrary(data))
+    .catch((err) => alert(err.message))
 
   collapsibleLibrary.addEventListener("click", () => {
     libraryBooksContainer.classList.toggle("hidden")
