@@ -1,0 +1,36 @@
+<%= javascript_include_tag 'index' %>
+<%= stylesheet_link_tag 'index', media: 'all' %>
+
+<div id="header">
+  <h2 id="better-reads">Better Reads</h2>
+    <img id="plants-and-books" data-default="<%= asset_path('bookshelf.png') %>" data-hover="<%= asset_path('welcome.png') %>" />
+</div>
+
+<div id="main">
+  <div id="search">
+    <h2>Search Books By Author</h2>
+    <form id="book-form">
+      <input id="search-input" type="text" name="search">
+      <input type="submit" name="submit" value="search"/>
+    </form>
+  </div>
+  <div class="book-details-container">
+  </div>
+
+  <div class="container">
+    <div class="book-grid">
+    </div>
+  </div>
+
+  <div class="library">
+    <button class="my-library">My Library:</button>
+    <div class="image-container"></div>
+  </div>
+</div>
+
+<template id="library-template">
+  <div id="lib-div">
+    <img id="lib-img">
+    <button id="lib-delete-btn">x</button>
+  </div>
+</template>
