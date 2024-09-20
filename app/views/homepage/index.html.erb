@@ -1,9 +1,13 @@
 <%= javascript_include_tag 'index' %>
 <%= stylesheet_link_tag 'index', media: 'all' %>
 
-<div id="header">
+<div id="header" data-controller="hover">
   <h2 id="better-reads">Better Reads</h2>
-    <img id="plants-and-books" data-default="<%= asset_path('bookshelf.png') %>" data-hover="<%= asset_path('welcome.png') %>" />
+  <img id="plants-and-books"
+       data-hover-default-value="<%= asset_path('bookshelf.png') %>"
+       data-hover-hover-value="<%= asset_path('welcome.png') %>"
+       data-action="mouseover->hover#hoverIn mouseout->hover#hoverOut"
+       data-hover-target="image" />
 </div>
 
 <div id="main">

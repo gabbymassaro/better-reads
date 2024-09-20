@@ -3,22 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const header = document.getElementById("header")
   const pageHeader = document.getElementById("better-reads")
   const collapsibleLibrary = document.querySelector(".my-library")
-  const searchInput = document.getElementById("search")
   let bookGrid = document.querySelector(".book-grid")
   let bookDetailsContainer = document.querySelector(".book-details-container")
   const plantsAndBooks = document.getElementById("plants-and-books")
   let libraryBooksContainer = document.querySelector(".image-container")
   let libraryImageContainer
 
-  plantsAndBooks.src = plantsAndBooks.dataset.default
-
-  plantsAndBooks.addEventListener("mouseover", () => {
-    plantsAndBooks.src = plantsAndBooks.dataset.hover
-  })
-
-  plantsAndBooks.addEventListener("mouseout", () => {
-    plantsAndBooks.src = plantsAndBooks.dataset.default
-  })
+  plantsAndBooks.src = plantsAndBooks.dataset.hoverDefaultValue
 
   header.appendChild(pageHeader)
 
@@ -111,10 +102,10 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("delete button was clicked")
     })
 
-    libraryBook.addEventListener("click", () => {
-      onLibraryBook(doc)
-      console.log("library book was clicked")
-    })
+    // libraryBook.addEventListener("click", () => {
+    //   onLibraryBook(doc)
+    //   console.log("library book was clicked")
+    // })
   }
 
   function onDeleteButton(e, doc) {
@@ -132,10 +123,10 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-  function onLibraryBook(doc) {
-    // window.open(`https://www.amazon.com/dp/${doc.amazon_id[0]}`)
-    console.log(doc.id.amazon_ids)
-  }
+  // function onLibraryBook(doc) {
+  //   window.open(`https://www.amazon.com/dp/${doc.amazon_id[0]}`)
+  //   console.log(doc.id.amazon_ids)
+  // }
 
   const createLibrary = (bookData) => {
     bookData.forEach((doc) => {
